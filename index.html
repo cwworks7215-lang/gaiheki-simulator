@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>外壁塗装 見積シミュレーター(見本)</title>
+<style>.gsim{--gsim-main:#1f5f8b;--gsim-accent:#e8590c;--gsim-line:#d9e2ea;--gsim-bg:#f4f8fb;max-width:960px;margin:0 auto;padding:28px 20px;background:#fff;border:1px solid var(--gsim-line);border-radius:12px;color:#222;font-family:"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.6;box-sizing:border-box}
+.gsim *{box-sizing:border-box}
+.gsim__head{text-align:center;margin-bottom:20px}
+.gsim__eyebrow{margin:0;color:var(--gsim-accent);font-weight:700;font-size:14px}
+.gsim__title{margin:4px 0 0;font-size:24px;color:var(--gsim-main)}
+.gsim__form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px;background:var(--gsim-bg);border-radius:8px}
+.gsim__field span{display:block;font-weight:700;font-size:14px;margin-bottom:4px}
+.gsim__field select{width:100%;padding:10px;font-size:16px;border:1px solid var(--gsim-line);border-radius:6px;background:#fff}
+.gsim__cond{margin:18px 0 10px;text-align:center;font-size:14px;color:#555}
+.gsim__plans{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.gsim__plan{padding:16px 12px;border:2px solid var(--gsim-line);border-radius:10px;text-align:center}
+.gsim__plan-name{margin:0;font-weight:700;color:var(--gsim-main)}
+.gsim__plan-price{margin:6px 0 2px;font-size:14px}
+.gsim__plan-price span{font-size:26px;font-weight:700;color:var(--gsim-accent)}
+.gsim__plan-price small{font-size:12px;color:#555}
+.gsim__plan-note{margin:0;font-size:12px;color:#666}
+.gsim__items{margin-top:18px;padding:14px 16px;background:var(--gsim-bg);border-radius:8px}
+.gsim__items-title{margin:0 0 6px;font-weight:700;font-size:14px}
+.gsim__items ul{display:flex;flex-wrap:wrap;gap:6px 8px;margin:0;padding:0;list-style:none}
+.gsim__items li{padding:2px 10px;background:#fff;border:1px solid var(--gsim-line);border-radius:999px;font-size:13px}
+.gsim__note{margin:14px 0 0;font-size:12px;color:#666}
+@media (max-width:640px){
+  .gsim{padding:20px 14px}
+  .gsim__title{font-size:20px}
+  .gsim__form{grid-template-columns:1fr}
+  .gsim__plans{grid-template-columns:1fr;gap:8px}
+  .gsim__plan{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:8px;padding:12px 14px;text-align:left}
+  .gsim__plan-price{grid-row:1/3;grid-column:2;margin:0;text-align:right}
+  .gsim__plan-price span{font-size:22px}
+  .gsim__plan-price small{display:block}
+}
+</style>
+<style>body{margin:0;padding:24px 12px;background:#eef2f5}</style>
+</head>
+<body>
+<div class="gsim" data-gaiheki-sim></div>
+<script>
+// WordPressではプラグイン側(gaiheki-simulator.php)から同じ設定が渡されます。金額は見本用の仮の数字です
+window.GAIHEKI_SIM = {
+  basePing: 28, minPing: 15, maxPing: 60, round: 1000,
+  plans: [
+    {name: 'シリコンプラン', note: '耐用年数の目安 10〜13年', price: 880000},
+    {name: 'ラジカル制御プラン', note: '耐用年数の目安 12〜15年', price: 980000},
+    {name: 'フッ素プラン', note: '耐用年数の目安 15〜18年', price: 1180000},
+    {name: '無機プラン', note: '耐用年数の目安 18〜22年', price: 1380000}
+  ],
+  items: ['足場設置・解体', '高圧洗浄', '養生', '下地補修', '下塗り', '中塗り', '上塗り', '付帯部塗装']
+};
+</script>
+<script>(function () {
+  'use strict';
+
+  var cfg = window.GAIHEKI_SIM;
+  var root = document.querySelector('[data-gaiheki-sim]');
+  if (!cfg || !root) return;
+
+  var yen = function (n) { return n.toLocaleString('ja-JP'); };
+
+  // 28坪の税込価格 × 坪数 / 28 を丸め単位で四捨五入
+  var estimate = function (price, ping) {
+    var raw = price * ping / cfg.basePing;
+    return Math.round(raw / cfg.round) * cfg.round;
+  };
+
+  var options = function (from, to, unit) {
+    var html = '';
+    for (var i = from; i <= to; i++) {
+      html += '<option value="' + i + '"' + (i === cfg.basePing ? ' selected' : '') + '>' +
+        i + unit + '(約' + Math.round(i * 3.30578) + '㎡)</option>';
+    }
+    return html;
+  };
+
+  root.innerHTML =
+    '<div class="gsim__head">' +
+      '<p class="gsim__eyebrow">かんたん3項目</p>' +
+      '<h2 class="gsim__title">外壁塗装 見積シミュレーター</h2>' +
+    '</div>' +
+    '<div class="gsim__form">' +
+      '<label class="gsim__field"><span>延床面積</span>' +
+        '<select data-k="ping">' + options(cfg.minPing, cfg.maxPing, '坪') + '</select></label>' +
+      '<label class="gsim__field"><span>築年数</span>' +
+        '<select data-k="age"><option>〜10年</option><option selected>11〜20年</option><option>21〜30年</option><option>31年以上</option></select></label>' +
+      '<label class="gsim__field"><span>階数</span>' +
+        '<select data-k="floor"><option>平屋</option><option selected>2階建て</option><option>3階建て</option></select></label>' +
+    '</div>' +
+    '<p class="gsim__cond" data-k="cond"></p>' +
+    '<div class="gsim__plans" data-k="plans"></div>' +
+    '<div class="gsim__items"><p class="gsim__items-title">各プランに含まれる工事項目</p><ul>' +
+      cfg.items.map(function (n) { return '<li>' + n + '</li>'; }).join('') +
+    '</ul></div>' +
+    '<p class="gsim__note">※表示は延床面積から計算した税込の概算です。建物の形状・劣化の状態により、正式なお見積りと異なる場合があります。</p>';
+
+  var get = function (k) { return root.querySelector('[data-k="' + k + '"]'); };
+
+  var render = function () {
+    var ping = parseInt(get('ping').value, 10);
+    get('cond').textContent = '延床面積 ' + ping + '坪 ／ 築' + get('age').value + ' ／ ' + get('floor').value + 'の概算';
+    get('plans').innerHTML = cfg.plans.map(function (p) {
+      return '<div class="gsim__plan">' +
+        '<p class="gsim__plan-name">' + p.name + '</p>' +
+        '<p class="gsim__plan-price"><span>' + yen(estimate(p.price, ping)) + '</span>円<small>(税込)</small></p>' +
+        '<p class="gsim__plan-note">' + p.note + '</p>' +
+      '</div>';
+    }).join('');
+  };
+
+  root.addEventListener('change', render);
+  render();
+})();
+</script>
+</body>
+</html>
