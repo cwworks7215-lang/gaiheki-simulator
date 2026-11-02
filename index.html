@@ -3,115 +3,276 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>外壁塗装 見積シミュレーター(見本)</title>
-<style>.gsim{--gsim-main:#1f5f8b;--gsim-accent:#e8590c;--gsim-line:#d9e2ea;--gsim-bg:#f4f8fb;max-width:960px;margin:0 auto;padding:28px 20px;background:#fff;border:1px solid var(--gsim-line);border-radius:12px;color:#222;font-family:"Hiragino Sans","Yu Gothic",sans-serif;line-height:1.6;box-sizing:border-box}
-.gsim *{box-sizing:border-box}
-.gsim__head{text-align:center;margin-bottom:20px}
-.gsim__eyebrow{margin:0;color:var(--gsim-accent);font-weight:700;font-size:14px}
-.gsim__title{margin:4px 0 0;font-size:24px;color:var(--gsim-main)}
-.gsim__form{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:16px;background:var(--gsim-bg);border-radius:8px}
-.gsim__field span{display:block;font-weight:700;font-size:14px;margin-bottom:4px}
-.gsim__field select{width:100%;padding:10px;font-size:16px;border:1px solid var(--gsim-line);border-radius:6px;background:#fff}
-.gsim__cond{margin:18px 0 10px;text-align:center;font-size:14px;color:#555}
-.gsim__plans{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
-.gsim__plan{padding:16px 12px;border:2px solid var(--gsim-line);border-radius:10px;text-align:center}
-.gsim__plan-name{margin:0;font-weight:700;color:var(--gsim-main)}
-.gsim__plan-price{margin:6px 0 2px;font-size:14px}
-.gsim__plan-price span{font-size:26px;font-weight:700;color:var(--gsim-accent)}
-.gsim__plan-price small{font-size:12px;color:#555}
-.gsim__plan-note{margin:0;font-size:12px;color:#666}
-.gsim__items{margin-top:18px;padding:14px 16px;background:var(--gsim-bg);border-radius:8px}
-.gsim__items-title{margin:0 0 6px;font-weight:700;font-size:14px}
-.gsim__items ul{display:flex;flex-wrap:wrap;gap:6px 8px;margin:0;padding:0;list-style:none}
-.gsim__items li{padding:2px 10px;background:#fff;border:1px solid var(--gsim-line);border-radius:999px;font-size:13px}
-.gsim__note{margin:14px 0 0;font-size:12px;color:#666}
-@media (max-width:640px){
-  .gsim{padding:20px 14px}
-  .gsim__title{font-size:20px}
-  .gsim__form{grid-template-columns:1fr}
-  .gsim__plans{grid-template-columns:1fr;gap:8px}
-  .gsim__plan{display:grid;grid-template-columns:1fr auto;align-items:center;column-gap:8px;padding:12px 14px;text-align:left}
-  .gsim__plan-price{grid-row:1/3;grid-column:2;margin:0;text-align:right}
-  .gsim__plan-price span{font-size:22px}
-  .gsim__plan-price small{display:block}
+<title>外壁塗装 見積シミュレーション(見本)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+:root{--orange:#e8611a;--orange-d:#c24c0e;--navy:#1f3a7a;--ink:#2b2b2b;--sub:#6b6b6b;--bg:#f5f3ef;--line:#e4e0d8}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans JP","Hiragino Sans","Yu Gothic",sans-serif;line-height:1.7}
+
+/* ---------- トップ ---------- */
+.hero{position:relative;overflow:hidden;background:#8cc4f2 url(img/hero_pc.jpg) center/cover no-repeat;padding:44px 20px 40px}
+.hero-in{position:relative;max-width:1080px;margin:0 auto;display:grid;grid-template-columns:1fr 330px;align-items:center;gap:10px}
+.hero-copy{text-align:center}
+.hero-pre{display:inline-block;margin:0;font-weight:900;font-size:22px;color:var(--navy);letter-spacing:.06em}
+.hero-pre::before,.hero-pre::after{content:"";display:inline-block;width:2px;height:22px;background:var(--navy);vertical-align:-4px;margin:0 12px}
+.hero-pre::before{transform:rotate(-30deg)}.hero-pre::after{transform:rotate(30deg)}
+.hero-title{margin:6px 0 0;font-weight:900;line-height:1.15;color:var(--orange);-webkit-text-stroke:0;text-shadow:3px 3px 0 #fff,-3px -3px 0 #fff,3px -3px 0 #fff,-3px 3px 0 #fff,0 3px 0 #fff,0 -3px 0 #fff,3px 0 0 #fff,-3px 0 0 #fff,0 8px 18px rgba(0,0,0,.18)}
+.hero-title .t1{display:block;font-size:68px;letter-spacing:.12em}
+.hero-title .t1 span{display:inline-block;background:var(--orange);color:#fff;text-shadow:none;padding:0 .08em;margin:0 .03em;border-radius:6px}
+.hero-title .t2{display:block;font-size:62px;letter-spacing:.02em}
+.hero-badge{position:absolute;left:-6px;top:-6px;width:118px;height:118px;border-radius:50%;background:#fff;border:3px solid var(--orange);display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;color:var(--ink);font-size:15px;line-height:1.2;transform:rotate(-10deg);box-shadow:0 6px 14px rgba(0,0,0,.15)}
+.hero-badge b{font-size:38px;color:var(--orange);line-height:1}
+.hero-lead{margin:16px 0 0;font-size:24px;font-weight:900;text-shadow:0 0 6px #fff,0 0 12px #fff}
+.hero-lead em{font-style:normal;color:var(--navy);font-size:30px}
+.hero-points{display:flex;justify-content:center;gap:12px;margin:18px 0 0;padding:0;list-style:none}
+.hero-points li{display:flex;align-items:center;gap:10px;background:var(--navy);color:#fff;font-weight:700;font-size:15px;line-height:1.35;padding:10px 16px;border:2px solid #fff;border-radius:6px;box-shadow:0 4px 10px rgba(0,0,0,.18)}
+.hero-points svg{width:30px;height:30px;flex:0 0 30px}
+.hero-points b{color:#ffd84a}
+.hero-start{display:inline-block;margin-top:22px;padding:14px 48px;border-radius:999px;background:var(--orange);color:#fff;font-weight:900;font-size:18px;text-decoration:none;border:3px solid #fff;box-shadow:0 5px 0 var(--orange-d)}
+.phone{position:relative;width:330px;aspect-ratio:900/1100;align-self:end;margin-bottom:-44px}
+.phone img{position:absolute;inset:0;width:100%;height:100%}
+.phone-screen{position:absolute;left:32.6%;top:5.2%;width:37.2%;height:70.2%;border-radius:12px;overflow:hidden;background:#fff;padding:10px 8px;font-size:8.5px;line-height:1.45;display:flex;flex-direction:column}
+.ps-head{background:var(--navy);color:#fff;font-weight:700;text-align:center;border-radius:4px;padding:3px 0;font-size:9px}
+.ps-row{display:flex;justify-content:space-between;border-bottom:1px solid #eee;padding:3px 1px}
+.ps-row span:last-child{font-weight:700}
+.ps-sub{margin:6px 0 2px;font-weight:700;color:var(--navy)}
+.ps-it{display:flex;align-items:center;gap:4px;padding:1px 1px;color:#555}
+.ps-it::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--orange)}
+.ps-total{margin-top:auto;background:#fff4ec;border:1px solid var(--orange);border-radius:4px;padding:5px;text-align:center}
+.ps-total b{display:block;font-size:15px;color:var(--orange);line-height:1.2}
+
+/* ---------- シミュレーター ---------- */
+.sim{max-width:760px;margin:0 auto;padding:44px 16px 60px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);background:#e2ded6;border-radius:999px;overflow:hidden;margin:0 0 26px}
+.tab{padding:9px 4px;text-align:center;color:#9a958c;font-weight:700;font-size:14px;line-height:1.3;border-left:1px solid #d5d0c6}
+.tab:first-child{border-left:0}
+.tab small{display:block;font-size:10px;letter-spacing:.1em}
+.tab.is-on{background:var(--orange);color:#fff}
+.tab.is-done{background:#f3c9ac;color:#fff}
+.card{background:#fff;border-radius:10px;padding:26px 26px 28px;box-shadow:0 2px 10px rgba(0,0,0,.05)}
+.card[hidden]{display:none}
+.card h2{display:flex;align-items:center;gap:10px;margin:0 0 16px;padding-bottom:14px;border-bottom:1px solid var(--line);font-size:21px}
+.card h2 small{flex:0 0 auto;background:var(--orange);color:#fff;font-size:11px;letter-spacing:.08em;padding:4px 9px;border-radius:4px}
+.card h2 small b{font-size:16px;margin-left:2px}
+.desc{display:grid;grid-template-columns:1fr 210px;gap:18px;align-items:center}
+.desc p{margin:0 0 14px;font-size:14px;color:#444}
+.desc p em{font-style:normal;color:var(--orange);font-weight:700}
+.floor{border:2px solid var(--orange);border-radius:8px;padding:6px;background:#fff}
+.floor img{width:100%;display:block}
+.floor p{margin:0;text-align:center;font-size:12px;font-weight:700;color:var(--navy)}
+.ping{display:flex;align-items:center;gap:8px;font-weight:700}
+.ping select{font:inherit;font-size:20px;padding:8px 12px;border:1px solid #bbb;border-radius:6px;background:#fff}
+.opts{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.opts.three{grid-template-columns:repeat(3,1fr)}
+.opt{position:relative;padding:16px 10px;border:2px solid var(--line);border-radius:8px;background:#fff;font:inherit;font-size:17px;font-weight:700;color:var(--ink);cursor:pointer}
+.opt.is-on{border-color:var(--orange);background:#fff4ec;color:var(--orange-d)}
+.opt.is-on::after{content:"✓";position:absolute;top:6px;right:10px;font-size:14px;color:var(--orange)}
+.memo{margin:12px 0 0;font-size:12.5px;color:var(--sub)}
+.nav{display:flex;justify-content:center;gap:14px;margin-top:26px}
+.btn{min-width:170px;padding:13px 24px;border-radius:999px;border:0;font:inherit;font-size:16px;font-weight:700;cursor:pointer}
+.btn-next{background:var(--orange);color:#fff;box-shadow:0 4px 0 var(--orange-d)}
+.btn-back{background:#fff;color:var(--sub);border:2px solid var(--line)}
+
+/* 結果(見積書風) */
+.quote-meta{display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;font-size:13px;color:var(--sub);margin-bottom:12px}
+.quote{width:100%;border-collapse:collapse;font-size:15px}
+.quote th,.quote td{border:1px solid var(--line);padding:12px 14px}
+.quote thead th{background:var(--navy);color:#fff;font-weight:700;font-size:13px}
+.quote td.p{text-align:right;font-weight:900;font-size:20px;color:var(--ink);white-space:nowrap}
+.quote td.p small{font-size:12px;font-weight:500;color:var(--sub);margin-left:2px}
+.quote tr.rec td{background:#fff4ec}
+.quote tr.rec td.p{color:var(--orange)}
+.quote .tag{display:inline-block;margin-left:8px;padding:1px 8px;border-radius:3px;background:var(--orange);color:#fff;font-size:11px;font-weight:700;vertical-align:2px}
+.quote .life{display:block;font-size:12px;color:var(--sub)}
+.items{margin-top:16px;padding:14px 16px;background:var(--bg);border-radius:8px}
+.items p{margin:0 0 8px;font-weight:700;font-size:14px}
+.items ul{display:flex;flex-wrap:wrap;gap:6px 8px;margin:0;padding:0;list-style:none}
+.items li{padding:3px 12px;background:#fff;border:1px solid var(--line);border-radius:999px;font-size:13px}
+.cta{display:block;margin:24px auto 0;max-width:460px;padding:18px;border-radius:999px;background:var(--orange);color:#fff;text-align:center;text-decoration:none;font-weight:900;font-size:18px;box-shadow:0 5px 0 var(--orange-d)}
+.cta small{display:block;font-size:12px;font-weight:500;opacity:.95}
+.note{margin:14px 0 0;font-size:11.5px;color:var(--sub);text-align:center}
+
+@media (max-width:820px){
+  .hero{background-image:url(img/hero_sp.jpg);background-position:center bottom;padding:28px 14px 300px}
+  .hero-in{grid-template-columns:1fr}
+  .hero-badge{width:72px;height:72px;font-size:10px;left:-6px;top:-18px}
+  .hero-badge b{font-size:22px}
+  .hero-pre{font-size:16px}
+  .hero-pre::before,.hero-pre::after{height:16px;margin:0 8px}
+  .hero-title .t1{font-size:44px}
+  .hero-title .t2{font-size:36px}
+  .hero-lead{font-size:17px}
+  .hero-lead em{font-size:21px}
+  .hero-points{gap:6px}
+  .hero-points li{flex-direction:column;gap:2px;padding:8px 6px;font-size:12px;text-align:center;flex:1}
+  .hero-points svg{width:22px;height:22px;flex:none}
+  .phone{position:absolute;right:-18px;bottom:-330px;width:220px;margin:0}
+  .ps-it{display:none}.ps-sub{display:none}
+  .phone-screen{font-size:6px;padding:7px 5px}
+  .ps-head{font-size:6.5px}
+  .ps-total b{font-size:10px}
+  .sim{padding:30px 12px 46px}
+  .tab{font-size:11px;padding:7px 2px}
+  .card{padding:20px 16px 22px}
+  .card h2{font-size:17px}
+  .desc{grid-template-columns:1fr}
+  .floor{max-width:220px;margin:0 auto}
+  .opts.three{grid-template-columns:1fr 1fr 1fr}
+  .opt{font-size:15px;padding:14px 6px}
+  .btn{min-width:0;flex:1}
+  .quote{font-size:13px}
+  .quote th,.quote td{padding:9px 8px}
+  .quote td.p{font-size:16px}
+  .quote .tag{display:block;width:max-content;margin:3px 0 0}
 }
 </style>
-<style>body{margin:0;padding:24px 12px;background:#eef2f5}</style>
 </head>
 <body>
-<div class="gsim" data-gaiheki-sim></div>
+
+<section class="hero">
+  <div class="hero-in">
+    <div class="hero-copy" style="position:relative">
+      <div class="hero-badge">最短<b>30</b>秒で<br>わかる!</div>
+      <p class="hero-pre">外壁塗装</p>
+      <h1 class="hero-title"><span class="t1"><span>無</span><span>料</span><span>見</span><span>積</span></span><span class="t2">シミュレーション</span></h1>
+      <p class="hero-lead">3つ選ぶだけで、<em>概算費用</em>がすぐにわかる!</p>
+      <ul class="hero-points">
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>最短<b>30秒</b>で<br>完了!</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8 7h8M8 11h2M12 11h2M16 11h0M8 15h2M12 15h2M8 18h2M12 18h2"/></svg><span>その場で<br><b>金額</b>がわかる!</span></li>
+        <li><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg><span>スマホで<br>いつでも簡単!</span></li>
+      </ul>
+      <a class="hero-start" href="#sim">見積もりスタート ▼</a>
+    </div>
+    <div class="phone">
+      <img src="img/phone_hand.png" alt="">
+      <div class="phone-screen" aria-hidden="true">
+        <div class="ps-head">概算お見積り</div>
+        <div class="ps-row"><span>延床面積</span><span data-ps="ping">28坪</span></div>
+        <div class="ps-row"><span>築年数</span><span data-ps="age">11〜20年</span></div>
+        <div class="ps-row"><span>階数</span><span data-ps="floor">2階建て</span></div>
+        <div class="ps-row"><span>プラン</span><span data-ps="plan">ラジカル制御</span></div>
+        <div class="ps-sub">含まれる工事</div><div class="ps-it">足場設置・解体</div><div class="ps-it">高圧洗浄・養生</div><div class="ps-it">下地補修</div><div class="ps-it">下塗り・中塗り・上塗り</div><div class="ps-it">付帯部塗装</div>
+        <div class="ps-total">概算費用(税込)<b data-ps="total">980,000円</b></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<main class="sim" id="sim">
+  <div class="tabs">
+    <div class="tab is-on" data-tab="1"><small>STEP 01</small>延床面積</div>
+    <div class="tab" data-tab="2"><small>STEP 02</small>築年数</div>
+    <div class="tab" data-tab="3"><small>STEP 03</small>階数</div>
+    <div class="tab" data-tab="4"><small>STEP 04</small>概算結果</div>
+  </div>
+
+  <section class="card" data-step="1">
+    <h2><small>STEP<b>01</b></small>延床面積(坪数)を選択してください</h2>
+    <div class="desc">
+      <div>
+        <p>延床面積とは、1階と2階の床面積の合計です(3階がある場合は3階も合計)。<br>不明な場合は一般的な住宅の「<em>30坪</em>」を選んでください。</p>
+        <label class="ping"><select data-k="ping"></select>坪</label>
+      </div>
+      <div class="floor"><img src="img/floor_illust.png" alt="1階と2階の床面積の合計が延床面積"><p>延床面積 = 1階 + 2階の床面積</p></div>
+    </div>
+    <div class="nav"><button class="btn btn-next" data-go="2">次へ</button></div>
+  </section>
+
+  <section class="card" data-step="2" hidden>
+    <h2><small>STEP<b>02</b></small>築年数を選択してください</h2>
+    <div class="opts" data-k="age"></div>
+    <p class="memo">※築年数は工事内容の確認に使います。概算金額は変わりません。</p>
+    <div class="nav"><button class="btn btn-back" data-go="1">戻る</button><button class="btn btn-next" data-go="3">次へ</button></div>
+  </section>
+
+  <section class="card" data-step="3" hidden>
+    <h2><small>STEP<b>03</b></small>階数を選択してください</h2>
+    <div class="opts three" data-k="floor"></div>
+    <p class="memo">※階数は工事内容の確認に使います。概算金額は変わりません。</p>
+    <div class="nav"><button class="btn btn-back" data-go="2">戻る</button><button class="btn btn-next" data-go="4">結果を見る</button></div>
+  </section>
+
+  <section class="card" data-step="4" hidden>
+    <h2><small>STEP<b>04</b></small>概算お見積り結果</h2>
+    <div class="quote-meta"><span data-k="cond"></span><span>金額はすべて税込</span></div>
+    <table class="quote">
+      <thead><tr><th>プラン</th><th style="text-align:right">概算費用</th></tr></thead>
+      <tbody data-k="rows"></tbody>
+    </table>
+    <div class="items"><p>各プランに含まれる工事項目</p><ul data-k="items"></ul></div>
+    <a class="cta" href="#contact">この内容で無料の正式見積りを依頼する<small>現地調査・お見積りは無料です</small></a>
+    <p class="note">※延床面積から計算した概算です。建物の形状や劣化の状態により、正式なお見積りと異なる場合があります。</p>
+    <div class="nav"><button class="btn btn-back" data-go="1">条件を変えてやり直す</button></div>
+  </section>
+</main>
+
 <script>
-// WordPressではプラグイン側(gaiheki-simulator.php)から同じ設定が渡されます。金額は見本用の仮の数字です
-window.GAIHEKI_SIM = {
+// 料金表(28坪の税込価格)。WordPressではプラグインの設定から渡す。金額は見本用の仮の数字
+var CFG = {
   basePing: 28, minPing: 15, maxPing: 60, round: 1000,
   plans: [
-    {name: 'シリコンプラン', note: '耐用年数の目安 10〜13年', price: 880000},
-    {name: 'ラジカル制御プラン', note: '耐用年数の目安 12〜15年', price: 980000},
-    {name: 'フッ素プラン', note: '耐用年数の目安 15〜18年', price: 1180000},
-    {name: '無機プラン', note: '耐用年数の目安 18〜22年', price: 1380000}
+    {name: 'シリコンプラン', life: '耐用年数の目安 10〜13年', price: 880000},
+    {name: 'ラジカル制御プラン', life: '耐用年数の目安 12〜15年', price: 980000, recommend: true},
+    {name: 'フッ素プラン', life: '耐用年数の目安 15〜18年', price: 1180000},
+    {name: '無機プラン', life: '耐用年数の目安 18〜22年', price: 1380000}
   ],
+  ages: ['〜10年', '11〜20年', '21〜30年', '31年以上'],
+  floors: ['平屋', '2階建て', '3階建て'],
   items: ['足場設置・解体', '高圧洗浄', '養生', '下地補修', '下塗り', '中塗り', '上塗り', '付帯部塗装']
 };
-</script>
-<script>(function () {
-  'use strict';
 
-  var cfg = window.GAIHEKI_SIM;
-  var root = document.querySelector('[data-gaiheki-sim]');
-  if (!cfg || !root) return;
-
+(function () {
+  var $ = function (s) { return document.querySelector(s); };
   var yen = function (n) { return n.toLocaleString('ja-JP'); };
-
   // 28坪の税込価格 × 坪数 / 28 を丸め単位で四捨五入
-  var estimate = function (price, ping) {
-    var raw = price * ping / cfg.basePing;
-    return Math.round(raw / cfg.round) * cfg.round;
+  var estimate = function (price, ping) { return Math.round(price * ping / CFG.basePing / CFG.round) * CFG.round; };
+  var state = {ping: 30, age: '11〜20年', floor: '2階建て'};
+
+  var sel = $('[data-k=ping]'), html = '';
+  for (var i = CFG.minPing; i <= CFG.maxPing; i++) html += '<option value="' + i + '"' + (i === state.ping ? ' selected' : '') + '>' + i + '</option>';
+  sel.innerHTML = html;
+  sel.addEventListener('change', function () { state.ping = +sel.value; render(); });
+
+  var buildOpts = function (key, list) {
+    var box = $('[data-k=' + key + ']');
+    box.innerHTML = list.map(function (v) { return '<button type="button" class="opt' + (v === state[key] ? ' is-on' : '') + '" data-v="' + v + '">' + v + '</button>'; }).join('');
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('.opt'); if (!b) return;
+      box.querySelectorAll('.opt').forEach(function (x) { x.classList.remove('is-on'); });
+      b.classList.add('is-on'); state[key] = b.getAttribute('data-v'); render();
+    });
   };
-
-  var options = function (from, to, unit) {
-    var html = '';
-    for (var i = from; i <= to; i++) {
-      html += '<option value="' + i + '"' + (i === cfg.basePing ? ' selected' : '') + '>' +
-        i + unit + '(約' + Math.round(i * 3.30578) + '㎡)</option>';
-    }
-    return html;
-  };
-
-  root.innerHTML =
-    '<div class="gsim__head">' +
-      '<p class="gsim__eyebrow">かんたん3項目</p>' +
-      '<h2 class="gsim__title">外壁塗装 見積シミュレーター</h2>' +
-    '</div>' +
-    '<div class="gsim__form">' +
-      '<label class="gsim__field"><span>延床面積</span>' +
-        '<select data-k="ping">' + options(cfg.minPing, cfg.maxPing, '坪') + '</select></label>' +
-      '<label class="gsim__field"><span>築年数</span>' +
-        '<select data-k="age"><option>〜10年</option><option selected>11〜20年</option><option>21〜30年</option><option>31年以上</option></select></label>' +
-      '<label class="gsim__field"><span>階数</span>' +
-        '<select data-k="floor"><option>平屋</option><option selected>2階建て</option><option>3階建て</option></select></label>' +
-    '</div>' +
-    '<p class="gsim__cond" data-k="cond"></p>' +
-    '<div class="gsim__plans" data-k="plans"></div>' +
-    '<div class="gsim__items"><p class="gsim__items-title">各プランに含まれる工事項目</p><ul>' +
-      cfg.items.map(function (n) { return '<li>' + n + '</li>'; }).join('') +
-    '</ul></div>' +
-    '<p class="gsim__note">※表示は延床面積から計算した税込の概算です。建物の形状・劣化の状態により、正式なお見積りと異なる場合があります。</p>';
-
-  var get = function (k) { return root.querySelector('[data-k="' + k + '"]'); };
+  buildOpts('age', CFG.ages);
+  buildOpts('floor', CFG.floors);
+  $('[data-k=items]').innerHTML = CFG.items.map(function (n) { return '<li>' + n + '</li>'; }).join('');
 
   var render = function () {
-    var ping = parseInt(get('ping').value, 10);
-    get('cond').textContent = '延床面積 ' + ping + '坪 ／ 築' + get('age').value + ' ／ ' + get('floor').value + 'の概算';
-    get('plans').innerHTML = cfg.plans.map(function (p) {
-      return '<div class="gsim__plan">' +
-        '<p class="gsim__plan-name">' + p.name + '</p>' +
-        '<p class="gsim__plan-price"><span>' + yen(estimate(p.price, ping)) + '</span>円<small>(税込)</small></p>' +
-        '<p class="gsim__plan-note">' + p.note + '</p>' +
-      '</div>';
+    $('[data-k=cond]').textContent = '延床' + state.ping + '坪 ／ 築' + state.age + ' ／ ' + state.floor;
+    $('[data-k=rows]').innerHTML = CFG.plans.map(function (p) {
+      return '<tr' + (p.recommend ? ' class="rec"' : '') + '><td>' + p.name + (p.recommend ? '<span class="tag">おすすめ</span>' : '') +
+        '<span class="life">' + p.life + '</span></td><td class="p">' + yen(estimate(p.price, state.ping)) + '<small>円</small></td></tr>';
     }).join('');
+    var rec = CFG.plans.filter(function (p) { return p.recommend; })[0] || CFG.plans[0];
+    $('[data-ps=ping]').textContent = state.ping + '坪';
+    $('[data-ps=age]').textContent = state.age;
+    $('[data-ps=floor]').textContent = state.floor;
+    $('[data-ps=plan]').textContent = rec.name.replace('プラン', '');
+    $('[data-ps=total]').textContent = yen(estimate(rec.price, state.ping)) + '円';
   };
 
-  root.addEventListener('change', render);
+  var go = function (n) {
+    document.querySelectorAll('[data-step]').forEach(function (c) { c.hidden = +c.getAttribute('data-step') !== n; });
+    document.querySelectorAll('[data-tab]').forEach(function (t) {
+      var k = +t.getAttribute('data-tab');
+      t.classList.toggle('is-on', k === n); t.classList.toggle('is-done', k < n);
+    });
+    $('#sim').scrollIntoView({behavior: 'smooth', block: 'start'});
+  };
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest('[data-go]'); if (b) go(+b.getAttribute('data-go'));
+  });
   render();
 })();
 </script>
